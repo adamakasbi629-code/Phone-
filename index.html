@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Profile Info Fetcher</title>
+</head>
+<body>
+    <h1>Instagram Profile Information</h1>
+    <form id="profile-form">
+        <label for="profile-link">Enter Instagram Profile Link:</label><br>
+        <input type="text" id="profile-link" name="profile-link" required><br>
+        <button type="submit">Get Profile Info</button>
+    </form>
+    <div id="profile-info"></div>
+    <script>
+        document.getElementById('profile-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const link = document.getElementById('profile-link').value;
+            // Fetch Instagram profile data using link
+            // Note: Instagram API access is required for this to work.
+            fetch(`https://api.instagram.com/v1/users/self/?access_token=ACCESS_TOKEN`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('profile-info').innerHTML = `<h2>${data.data.username}</h2><p>${data.data.bio}</p>`;
+                })
+                .catch(error => {
+                    document.getElementById('profile-info').textContent = 'Error fetching profile information.';
+                });
+        });
+    </script>
+</body>
+</html>
